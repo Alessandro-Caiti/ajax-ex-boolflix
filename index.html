@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/5e15826193.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="container">
@@ -32,11 +33,11 @@
 
         <script id="card-template" type="text/x-handlebars-template">
             <div class="card flex" data-genre="{{genre}}">
-                <!-- <img src="{{moviePoster}}" alt="{{movieTitle}}"> -->
+                <img src="{{moviePoster}}" alt="{{movieTitle}}">
                 <h3>{{movieTitle}}</h3>
                 <span>{{originalTitle}}</span>
-                <span>{{movieLanguage}}</span>
-                <span>{{vote}}</span>
+                <span>{{{movieLanguage}}}</span>
+                <span>{{{vote}}}</span>
             </div>
         </script>
 
