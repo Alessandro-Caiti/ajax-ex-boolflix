@@ -15,8 +15,8 @@
                 <div class="header-container flex">
                     <img src="img/netflixlogo.png" alt="logo">
                     <div class="search-bar flex">
-                        <input id="film-selector" placeholder="Cerca un film">
-                        <button id="send">Cerca</button>
+                        <input id="show-selector" placeholder="Cerca un film">
+                        <i id="send" class="fas fa-search"></i>
                     </div>
                 </div>
             </header>
@@ -33,11 +33,11 @@
 
         <script id="card-template" type="text/x-handlebars-template">
             <div class="card flex" data-genre="{{genre}}">
-                <img src="{{moviePoster}}" alt="{{movieTitle}}">
-                <h3>{{movieTitle}}</h3>
-                <span>{{originalTitle}}</span>
-                <span>{{{movieLanguage}}}</span>
-                <span>{{{vote}}}</span>
+                <img src="{{contentPoster}}" alt="Locandina: {{contentTitle}}">
+                <h3>{{contentTitle}}</h3>
+                <span>{{contentOriginalTitle}}</span>
+                <span>{{{contentLanguage}}}</span>
+                <span>{{{contentVote}}}</span>
             </div>
         </script>
 

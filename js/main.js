@@ -5,92 +5,161 @@
 $(document).ready(function() {
 
     var apiBaseUrl = 'https://api.themoviedb.org/3';
+    var posterBaseUrl = 'https://image.tmdb.org/t/p/';
+    var posterSize = 'w342';
+
 
     var cardSource = $("#card-template").html();
     var cardTemplate = Handlebars.compile(cardSource);
 
     $("#send").click(function() {
-        movieSearch();
-        tvSearch();
+        contentsSrc()
     });
 
-    $("#film-selector").keydown(function(event) {
+    $("#show-selector").keydown(function(event) {
         if (event.keyCode == 13) {
-            movieSearch();
-            tvSearch();
+            contentsSrc()
         }
     });
 
-    function movieSearch() {
-        var movieSearch = $('#film-selector').val().toLowerCase();
-        // $('#film-selector').val('');
-        $('.cards-container').empty();
-        $.ajax({
-            // url: 'https://api.themoviedb.org/3/search/movie?api_key=60d3f79d97d40d18b614554e8dc4b31d&query=name+name+name',
-            url: apiBaseUrl + '/search/movie',
-            data: {
-                api_key: '60d3f79d97d40d18b614554e8dc4b31d',
-                query:  movieSearch,
-                language: 'it-IT'
-            },
-            method: "GET",
-            success: function(data) {
-                console.log(data);
-                var movies = data.results;
-                for (var i = 0; i < movies.length; i++) {
-                    var movie = movies[i];
-                    console.log(movie.title);
-                    var movieProperties = {
-                        moviePoster: 'https://image.tmdb.org/t/p/w342' + movie.poster_path,
-                        movieTitle: movie.title,
-                        originalTitle: movie.original_title,
-                        movieLanguage: flag(movie.original_language),
-                        vote: voteToStars(roundHalf(movie.vote_average))
-                    };
-                    var movieCard = cardTemplate(movieProperties);
-                    $(".cards-container").append(movieCard);
-                }
-            },
-            error: function() {
-                alert("Errore!")
-            }
-        })
+    function contentsSrc() {
+        var srcQuery = $('#show-selector').val().toLowerCase();
+        $('#show-selector').val('');
+        if (srcQuery.length !== 0) {
+            $('.cards-container').empty();
+            findContents('movie', srcQuery);
+            findContents('tv', srcQuery);
+        } else {
+            alert('Scrivi qualcosa nel campo di ricerca!')
+        }
     }
 
-    function tvSearch() {
-        var tvSearch = $('#film-selector').val().toLowerCase();
-        $('#film-selector').val('');
-        $('.cards-container').empty();
+    function findContents(media, srcQuery) {
         $.ajax({
-            // url: 'https://api.themoviedb.org/3/search/movie?api_key=60d3f79d97d40d18b614554e8dc4b31d&query=name+name+name',
-            url: apiBaseUrl + '/search/tv',
+            url: apiBaseUrl + '/search/' + media,
             data: {
                 api_key: '60d3f79d97d40d18b614554e8dc4b31d',
-                query:  tvSearch,
+                query: srcQuery,
                 language: 'it-IT'
             },
-            method: "GET",
+            method: 'GET',
             success: function(data) {
-                console.log(data);
-                var series = data.results;
-                for (var i = 0; i < series.length; i++) {
-                    var serie = series[i];
-                    console.log(serie.name);
-                    var serieProperties = {
-                        moviePoster: 'https://image.tmdb.org/t/p/w342' + serie.poster_path,
-                        movieTitle: serie.name,
-                        originalTitle: serie.original_name,
-                        movieLanguage: flag(serie.original_language),
-                        vote: voteToStars(roundHalf(serie.vote_average))
-                    };
-                    var serieCard = cardTemplate(serieProperties);
-                    $(".cards-container").append(serieCard);
-                }
+                var contents = data.results;
+                printCard(media, contents);
             },
-            error: function() {
-                alert("Errore!")
+            error: function(err) {
+                alert('Errore!')
             }
-        })
+        });
+    }
+
+    function printCard(media, contents) {
+        var title, originalTitle;
+        for (var i = 0; i < contents.length; i++) {
+            var content = contents[i];
+            if (media == 'movie') {
+                title = content.title;
+                originalTitle = content.original_title;
+            } else if (media == 'tv') {
+                title = content.name;
+                originalTitle = content.original_name;
+            }
+
+            var contentProperties = {
+                contentPoster: printPoster(content.poster_path),
+                contentTitle: title,
+                contentOriginalTitle: originalTitle,
+                contentLanguage: langToFlag(content.original_language),
+                contentVote: voteToStars(roundHalf(content.vote_average))
+            };
+            var contentCard = cardTemplate(contentProperties);
+            $(".cards-container").append(contentCard);
+        }
+    }
+
+    // function movieSearch() {
+    //     var movieSearch = $('#show-selector').val().toLowerCase();
+    //     // $('#film-selector').val('');
+    //     $('.cards-container').empty();
+    //     $.ajax({
+    //         // url: 'https://api.themoviedb.org/3/search/movie?api_key=60d3f79d97d40d18b614554e8dc4b31d&query=name+name+name',
+    //         url: apiBaseUrl + '/search/movie',
+    //         data: {
+    //             api_key: '60d3f79d97d40d18b614554e8dc4b31d',
+    //             query:  movieSearch,
+    //             language: 'it-IT'
+    //         },
+    //         method: "GET",
+    //         success: function(data) {
+    //             console.log(data);
+    //             var movies = data.results;
+    //             for (var i = 0; i < movies.length; i++) {
+    //                 var movie = movies[i];
+    //                 console.log(movie.title);
+    //                 var movieProperties = {
+    //                     moviePoster: printPoster(movie.poster_path),
+    //                     movieTitle: movie.title,
+    //                     originalTitle: movie.original_title,
+    //                     movieLanguage: langToFlag(movie.original_language),
+    //                     vote: voteToStars(roundHalf(movie.vote_average))
+    //                 };
+    //                 var movieCard = cardTemplate(movieProperties);
+    //                 $(".cards-container").append(movieCard);
+    //             }
+    //         },
+    //         error: function() {
+    //             alert("Errore!")
+    //         }
+    //     })
+    // }
+    //
+    // function tvSearch() {
+    //     var tvSearch = $('#show-selector').val().toLowerCase();
+    //     $('#show-selector').val('');
+    //     $('.cards-container').empty();
+    //     $.ajax({
+    //         // url: 'https://api.themoviedb.org/3/search/movie?api_key=60d3f79d97d40d18b614554e8dc4b31d&query=name+name+name',
+    //         url: apiBaseUrl + '/search/tv',
+    //         data: {
+    //             api_key: '60d3f79d97d40d18b614554e8dc4b31d',
+    //             query:  tvSearch,
+    //             language: 'it-IT'
+    //         },
+    //         method: "GET",
+    //         success: function(data) {
+    //             console.log(data);
+    //             var series = data.results;
+    //             for (var i = 0; i < series.length; i++) {
+    //                 var serie = series[i];
+    //                 console.log(serie.name);
+    //                 var serieProperties = {
+    //                     moviePoster: printPoster(serie.poster_path),
+    //                     movieTitle: serie.name,
+    //                     originalTitle: serie.original_name,
+    //                     movieLanguage: langToFlag(serie.original_language),
+    //                     vote: voteToStars(roundHalf(serie.vote_average))
+    //                 };
+    //                 var serieCard = cardTemplate(serieProperties);
+    //                 $(".cards-container").append(serieCard);
+    //             }
+    //         },
+    //         error: function() {
+    //             alert("Errore!")
+    //         }
+    //     })
+    // }
+
+    function voteToStars(vote) {
+        vote = Math.ceil(vote / 2);
+        var stars = '';
+        for (var i = 1; i <= 5; i++) {
+            if (i <= vote) {
+                stars += '<i class="fas fa-star"></i>';
+            } else {
+                stars += '<i class="far fa-star"></i>';
+            }
+        }
+        return stars;
     }
 
     function roundHalf(vote) {
@@ -123,19 +192,47 @@ $(document).ready(function() {
         return stars;
     }
 
-    function flag(language) {
-        var flag = '';
-        if (language == 'en') {
-            flag = '<img src="https://www.countryflags.io/us/flat/64.png">' + '<img src="https://www.countryflags.io/gb/flat/64.png">'
-        } else if (language == 'it') {
-            flag = '<img src="https://www.countryflags.io/it/flat/64.png">'
-        } else if (language == 'fr') {
-            flag = '<img src="https://www.countryflags.io/fr/flat/64.png">'
-        } else if (language == 'de') {
-            flag = '<img src="https://www.countryflags.io/de/flat/64.png">'
+    function langToFlag(language) {
+        var availableFlag = [
+            'en',
+            'it',
+            'fr',
+            'de'
+        ];
+        if (availableFlag.includes(language)) {
+            var flag = '<img src="img/flags/' + language + '.png" alt="' + language +'">';
+            return flag;
+        } else {
+            var noFlag = 'Lingua originale:' + ' ' + language;
+            return noFlag;
         }
-        return flag;
     }
+
+    function printPoster(path) {
+        if (path !== null) {
+            return posterBaseUrl + posterSize + path;
+        } else {
+            return 'img/noposter.jpg';
+        }
+    }
+    // Funzione per mostrare le bandiere ma prese da sorgente esterna
+
+    // function langToFlag(language) {
+    //     var flag = '';
+    //     if (language == 'en') {
+    //         flag = '<img src="https://www.countryflags.io/us/flat/64.png">' + '<img src="https://www.countryflags.io/gb/flat/64.png">'
+    //     } else if (language == 'it') {
+    //         flag = '<img src="https://www.countryflags.io/it/flat/64.png">'
+    //     } else if (language == 'fr') {
+    //         flag = '<img src="https://www.countryflags.io/fr/flat/64.png">'
+    //     } else if (language == 'de') {
+    //         flag = '<img src="https://www.countryflags.io/de/flat/64.png">'
+    //     } else {
+    //         flag = 'Lingua originale' + ' ' + language;
+    //     }
+    //     return flag;
+    // }
+
     // $.ajax({
     //     // url: 'https://api.themoviedb.org/3/search/movie?api_key=60d3f79d97d40d18b614554e8dc4b31d&query=name+name+name',
     //     url: apiBaseUrl + '/search/movie',
