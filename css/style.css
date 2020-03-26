@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
 }
 
 .flex {
@@ -16,6 +17,8 @@ body {
     background-color: #1B1B1B;
     /* width: 100vw; */
     min-height: 100vh;
+    min-width: 100vw;
+    max-width: 100vw;
 }
 
 header {
@@ -26,7 +29,7 @@ header {
 
 .header-container {
     margin: 0 auto;
-    width: 1080px;
+    max-width: 1080px;
     height: 100%;
     justify-content: space-between;
     align-items: center;
@@ -46,13 +49,13 @@ input {
 header i {
 color: white;
 font-size: 32px;
-padding: 0 10px;
+padding: 0 30px 0 10px;
 cursor: pointer;
 }
 
 h2 {
     margin: 0 auto;
-    width: 1080px;
+    max-width: 1080px;
     color: white;
     padding: 100px 0 20px 20px;
 }
@@ -60,9 +63,9 @@ h2 {
 .cards-container {
     /* flex-wrap: wrap; */
     margin: 0 auto;
-    width: 1080px;
+    max-width: 1080px;
     height: 100%;
-    padding: 20px 10px 100px;
+    padding: 20px 10px 50px;
     justify-content: flex-start;
     overflow-x: auto;
 }
