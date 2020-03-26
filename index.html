@@ -8,6 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/5e15826193.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="container">
@@ -20,7 +21,8 @@
                     </div>
                 </div>
             </header>
-            <div class="cards-container flex">
+            <h2>Movies</h2>
+            <div class="cards-container movies flex">
                 <!-- <div class="card" data-genre="{{genre}}">
                     <img src="{{albumImg}}" alt="{{albumName}}">
                     <h3>{{albumName}}</h3>
@@ -28,16 +30,31 @@
                     <span>{{year}}</span>
                 </div> -->
             </div>
+            <h2>Series</h2>
+            <div class="cards-container series flex">
+                <!-- <div class="card" data-genre="{{genre}}">
+                    <img src="{{albumImg}}" alt="{{albumName}}">
+                    <h3>{{albumName}}</h3>
+                    <span>{{author}}</span>
+                    <span>{{year}}</span>
+                    <div class="">
+                        <p></p>
+                    </div>
+                </div> -->
+            </div>
         </div>
 
 
         <script id="card-template" type="text/x-handlebars-template">
             <div class="card flex" data-genre="{{genre}}">
-                <img src="{{contentPoster}}" alt="Locandina: {{contentTitle}}">
+                <img class="poster" src="{{contentPoster}}" alt="Locandina: {{contentTitle}}">
                 <h3>{{contentTitle}}</h3>
-                <span>{{contentOriginalTitle}}</span>
-                <span>{{{contentLanguage}}}</span>
-                <span>{{{contentVote}}}</span>
+                <p>Titolo originale: {{contentOriginalTitle}}</p>
+                <span>Lingua originale: {{{contentLanguage}}}</span>
+                <span>Voto: {{{contentVote}}}</span>
+                <div class="overview">
+                    <p>{{contentOverview}}</p>
+                </div>
             </div>
         </script>
 

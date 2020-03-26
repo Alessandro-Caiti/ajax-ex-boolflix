@@ -57,6 +57,7 @@ $(document).ready(function() {
         var title, originalTitle;
         for (var i = 0; i < contents.length; i++) {
             var content = contents[i];
+            console.log(contents);
             if (media == 'movie') {
                 title = content.title;
                 originalTitle = content.original_title;
@@ -70,10 +71,18 @@ $(document).ready(function() {
                 contentTitle: title,
                 contentOriginalTitle: originalTitle,
                 contentLanguage: langToFlag(content.original_language),
-                contentVote: voteToStars(roundHalf(content.vote_average))
+                contentVote: voteToStars(roundHalf(content.vote_average)),
+                contentOverview: content.overview
             };
+
             var contentCard = cardTemplate(contentProperties);
-            $(".cards-container").append(contentCard);
+            if (media == 'movie') {
+                $(".cards-container.movies").append(contentCard);
+            } else if (media == 'tv') {
+                $(".cards-container.series").append(contentCard);
+            }
+
+            // $(".cards-container").append(contentCard);
         }
     }
 
