@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Boolflix</title>
+        <link rel="stylesheet" href="https://unpkg.com/simplebar@5.1.0/dist/simplebar.css"/>
+        <script src="https://unpkg.com/simplebar@5.1.0/dist/simplebar.min.js"></script>
         <link rel="stylesheet" href="css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -22,25 +24,29 @@
                 </div>
             </header>
             <h2>Movies</h2>
-            <div class="cards-container movies flex">
-                <!-- <div class="card" data-genre="{{genre}}">
-                    <img src="{{albumImg}}" alt="{{albumName}}">
-                    <h3>{{albumName}}</h3>
-                    <span>{{author}}</span>
-                    <span>{{year}}</span>
-                </div> -->
+            <div class="simplebar-container" data-simplebar>
+                <div class="cards-container movies flex">
+                    <!-- <div class="card" data-genre="{{genre}}">
+                        <img src="{{albumImg}}" alt="{{albumName}}">
+                        <h3>{{albumName}}</h3>
+                        <span>{{author}}</span>
+                        <span>{{year}}</span>
+                    </div> -->
+                </div>
             </div>
             <h2>Series</h2>
-            <div class="cards-container series flex">
-                <!-- <div class="card" data-genre="{{genre}}">
-                    <img src="{{albumImg}}" alt="{{albumName}}">
-                    <h3>{{albumName}}</h3>
-                    <span>{{author}}</span>
-                    <span>{{year}}</span>
-                    <div class="">
-                        <p></p>
-                    </div>
-                </div> -->
+            <div class="simplebar-container" data-simplebar>
+                <div class="cards-container series flex">
+                    <!-- <div class="card" data-genre="{{genre}}">
+                        <img src="{{albumImg}}" alt="{{albumName}}">
+                        <h3>{{albumName}}</h3>
+                        <span>{{author}}</span>
+                        <span>{{year}}</span>
+                        <div class="">
+                            <p></p>
+                        </div>
+                    </div> -->
+                </div>
             </div>
         </div>
 

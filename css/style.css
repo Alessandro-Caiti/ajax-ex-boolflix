@@ -60,6 +60,11 @@ h2 {
     padding: 100px 0 20px 20px;
 }
 
+.simplebar-container {
+    margin: 0 auto;
+    max-width: 1080px;
+}
+
 .cards-container {
     /* flex-wrap: wrap; */
     margin: 0 auto;
@@ -67,7 +72,14 @@ h2 {
     height: 100%;
     padding: 20px 10px 50px;
     justify-content: flex-start;
-    overflow-x: auto;
+}
+
+.simplebar-track.simplebar-horizontal {
+    margin: 20px 0;
+}
+
+.simplebar-scrollbar:before {
+    background: #808080;
 }
 
 .card {

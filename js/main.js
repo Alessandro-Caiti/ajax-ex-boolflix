@@ -86,6 +86,8 @@ $(document).ready(function() {
         }
     }
 
+    //Funzione ricerca vecchia divisa per movie e series
+
     // function movieSearch() {
     //     var movieSearch = $('#show-selector').val().toLowerCase();
     //     // $('#film-selector').val('');
