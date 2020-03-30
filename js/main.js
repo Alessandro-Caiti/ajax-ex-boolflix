@@ -12,6 +12,9 @@ $(document).ready(function() {
     var cardSource = $("#card-template").html();
     var cardTemplate = Handlebars.compile(cardSource);
 
+    homepageContents('movie')
+    homepageContents('tv')
+
     $("#send").click(function() {
         contentsSrc()
     });
@@ -32,6 +35,24 @@ $(document).ready(function() {
         } else {
             alert('Scrivi qualcosa nel campo di ricerca!')
         }
+    }
+
+    function homepageContents(media) {
+        $.ajax({
+            url: apiBaseUrl + '/' + media + '/popular',
+            data: {
+                api_key: '60d3f79d97d40d18b614554e8dc4b31d',
+                language: 'it-IT'
+            },
+            method: 'GET',
+            success: function(data) {
+                var contents = data.results;
+                printCard(media, contents);
+            },
+            error: function(err) {
+                alert('Errore!')
+            }
+        });
     }
 
     function findContents(media, srcQuery) {
